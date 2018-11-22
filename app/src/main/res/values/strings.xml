@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">MyUniversity</string>
+
+    <!-- login and signup layouts -->
+    <string name="email_edit_text">E-mail</string>
+    <string name="password_edit_text">Password</string>
+    <string name="username_edit_text">Full name</string>
+    <string name="group_edit_text">Group</string>
+    <string name="login_button">Sign in</string>
+    <string name="sign_up_button">Sign up</string>
+    <string name="no_account_text_view">No account yet? Create one.</string>
+    <string name="register_title_text_view">REGISTER A NEW ACCOUNT</string>
+
+    <!-- toolbar menu -->
+    <string name="sign_out">Sign out</string>
+    
+    <!-- Firebase database fields -->
+    <string name="db_users">users</string>
+    <string name="db_users_account">users_account</string>
+    <string name="db_news">news</string>
 </resources>
