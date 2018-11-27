@@ -3,9 +3,11 @@ package com.example.ramil.myuniversity.utils;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.ramil.myuniversity.R;
+import com.example.ramil.myuniversity.databinding.ActivitySignupBinding;
 import com.example.ramil.myuniversity.model.User;
 import com.example.ramil.myuniversity.model.UsersAccount;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,7 +48,8 @@ public class FirebaseUtil {
      * @param email
      * @param password
      */
-    public void registerNewEmail(final String email, String password) {
+    public void registerNewEmail(String email, String password,
+                                 final ActivitySignupBinding binding) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -64,10 +67,8 @@ public class FirebaseUtil {
                             Toast.makeText(mContext, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
-                            // TODO hide progress bar
+                            binding.signUpProgressBar.setVisibility(View.GONE);
                         }
-
-                        // ...
                     }
                 });
     }
@@ -77,6 +78,8 @@ public class FirebaseUtil {
      */
     public void sendVerificationEmail() {
         FirebaseUser user = mAuth.getCurrentUser();
+
+        // TODO complete verification method
 
         if (user != null) {
             user.sendEmailVerification()

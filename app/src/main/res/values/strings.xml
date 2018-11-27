@@ -2,20 +2,34 @@
     <string name="app_name">MyUniversity</string>
 
     <!-- login and signup layouts -->
-    <string name="email_edit_text">E-mail</string>
-    <string name="password_edit_text">Password</string>
-    <string name="username_edit_text">Full name</string>
-    <string name="group_edit_text">Group</string>
-    <string name="login_button">Sign in</string>
-    <string name="sign_up_button">Sign up</string>
-    <string name="no_account_text_view">No account yet? Create one.</string>
-    <string name="register_title_text_view">REGISTER A NEW ACCOUNT</string>
+    <string name="email_edit_text">Почта</string>
+    <string name="password_edit_text">Пароль</string>
+    <string name="username_edit_text">Имя Фамилия</string>
+    <string name="group_edit_text">Группа</string>
+    <string name="login_button">Войти</string>
+    <string name="sign_up_button">Зарегистрироваться</string>
+    <string name="no_account_text_view">Еще нет аккаунта? Создать.</string>
+    <string name="register_title_text_view">РЕГИСТРАЦИЯ НОВОГО АККАУНТА</string>
+
+    <!-- widgets -->
+    <string name="news_image_view">Image view</string>
 
     <!-- toolbar menu -->
-    <string name="sign_out">Sign out</string>
-    
+    <string name="sign_out">Выйти</string>
+
+    <!-- Bottom Navigation View -->
+    <string name="news_item">Новости</string>
+    <string name="events_item">События</string>
+    <string name="tasks_item">Задания</string>
+    <string name="schedule_item">Пары</string>
+    <string name="more_item"> </string>
+
     <!-- Firebase database fields -->
     <string name="db_users">users</string>
     <string name="db_users_account">users_account</string>
     <string name="db_news">news</string>
+
+    <!-- Error messages -->
+    <string name="empty_field">Это поле не можеть быть пустым</string>
+    <string name="small_password">Пароль должен быть длинее 6 символов</string>
 </resources>

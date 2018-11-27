@@ -1,22 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <import type="com.example.ramil.myuniversity.utils.XmlParser"/>
+        <import type="com.example.ramil.myuniversity.utils.DateUtil"/>
+
+        <variable
+            name="news"
+            type="com.example.ramil.myuniversity.model.News"/>
+
+        <variable
+            name="handlers"
+            type="com.example.ramil.myuniversity.NewsFragment.NewsClickHandlers"/>
+    </data>
 
     <android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="wrap_content"
         android:layout_margin="8dp"
         card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="4dp">
+        card_view:cardElevation="4dp"
+        android:onClick="@{(v) -> handlers.onNewsClicked(v, news)}">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/news_image_image_view"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/news_image_view"
+                app:imageUrl="@{XmlParser.getImage(news.raw_text)}"
+                tools:src="@drawable/placeholder"/>
 
+            <TextView
+                android:id="@+id/news_title_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="18sp"
+                android:text="@{news.title}"
+                android:textStyle="bold"
+                android:fontFamily="serif"
+                android:textColor="@color/title1"
+                android:shadowColor="@color/title2"
+                android:shadowRadius="2"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                tools:text="Заголовок"/>
+
+        <!--    <TextView
+                android:id="@+id/news_text_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{XmlParser.getText(news.text)}"/>   -->
+
+            <TextView
+                android:id="@+id/news_date_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingBottom="10dp"
+                android:text="@{DateUtil.getStandardDate(news.date)}"
+                android:textColor="@color/grey"
+                android:fontFamily="sans-serif-condensed"
+                tools:text="@tools:sample/date/ddmmyy"/>
 
         </LinearLayout>
 

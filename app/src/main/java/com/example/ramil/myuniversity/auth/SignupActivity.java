@@ -10,9 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.ramil.myuniversity.utils.FirebaseUtil;
 import com.example.ramil.myuniversity.R;
 import com.example.ramil.myuniversity.databinding.ActivitySignupBinding;
+import com.example.ramil.myuniversity.utils.FirebaseUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -62,20 +62,18 @@ public class SignupActivity extends AppCompatActivity {
                 group = binding.inputGroupEditText.getText().toString();
                 password = binding.inputPasswordEditText.getText().toString();
 
-                if (isIncorrectInput(email, username, group, password)) {
-                    Toast.makeText(mContext, "You must fill out all the fields.",
-                            Toast.LENGTH_SHORT).show();
-                } else {
+                if (isCorrectInput(email, username, group, password)) {
                     binding.signUpProgressBar.setVisibility(View.VISIBLE);
 
-                    firebaseUtil.registerNewEmail(email, password);
+                    firebaseUtil.registerNewEmail(email, password, binding);
                 }
             }
         });
     }
 
-    private boolean isIncorrectInput(String email, String name, String group, String password) {
-        return (email.equals("") || name.equals("") || group.equals("") || password.equals(""));
+    private boolean isCorrectInput(String email, String name, String group, String password) {
+        return (validateEmail(email) && validateUsername(name)
+                && validateGroup(group) && validatePassword(password));
     }
 
     private void setupFirebaseAuth() {
@@ -127,6 +125,46 @@ public class SignupActivity extends AppCompatActivity {
 
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    private boolean validateEmail(String email) {
+        if (email.isEmpty()) {
+            binding.inputEmailEditText.setError(getString(R.string.empty_field));
+            return false;
+        } else {
+            binding.inputEmailEditText.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateUsername(String username) {
+        if (username.isEmpty()) {
+            binding.inputUsernameEditText.setError(getString(R.string.empty_field));
+            return false;
+        } else {
+            binding.inputUsernameEditText.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateGroup(String group) {
+        if (group.isEmpty()) {
+            binding.inputGroupEditText.setError(getString(R.string.empty_field));
+            return false;
+        } else {
+            binding.inputGroupEditText.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePassword(String password) {
+        if (password.length() < 6) {
+            binding.inputPasswordEditText.setError(getString(R.string.small_password));
+            return false;
+        } else {
+            binding.inputPasswordEditText.setError(null);
+            return true;
         }
     }
 }
