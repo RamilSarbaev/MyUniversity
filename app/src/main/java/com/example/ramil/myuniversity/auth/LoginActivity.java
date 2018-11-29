@@ -11,9 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.ramil.myuniversity.BaseActivity;
 import com.example.ramil.myuniversity.R;
 import com.example.ramil.myuniversity.databinding.ActivityLoginBinding;
+import com.example.ramil.myuniversity.homescreen.HomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,6 +27,12 @@ public class LoginActivity extends AppCompatActivity {
 
     //Firebase
     private FirebaseAuth mAuth;
+
+    public static Intent newIntent(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return intent;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,10 +54,10 @@ public class LoginActivity extends AppCompatActivity {
 
     public class LoginClickHandlers {
 
-        Context context;
+        Context mContext;
 
         public LoginClickHandlers(Context context) {
-            this.context = context;
+            mContext = context;
         }
 
         public void onLoginButtonClicked(View view) {
@@ -71,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (!task.isSuccessful()) {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                Toast.makeText(context, "Authentication failed.",
+                                Toast.makeText(mContext, "Authentication failed.",
                                         Toast.LENGTH_SHORT).show();
 
                                 mBinding.loginProgressBar.setVisibility(View.GONE);
@@ -81,11 +87,10 @@ public class LoginActivity extends AppCompatActivity {
 
                                 try {
                                     if (mAuth.getCurrentUser().isEmailVerified()) {
-                                        Intent intent = new Intent(context, BaseActivity.class);
-                                        startActivity(intent);
+                                        startActivity(HomeActivity.newIntent(mContext));
                                         finish();
                                     } else {
-                                        Toast.makeText(context,
+                                        Toast.makeText(mContext,
                                                 "E-mail is not verified \n" +
                                                         "check your email inbox.",
                                                 Toast.LENGTH_SHORT).show();
@@ -102,8 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         public void onLinkSignupClicked(View view) {
-            Intent intent = new Intent(context, SignupActivity.class);
-            startActivity(intent);
+            startActivity(SignupActivity.newIntent(mContext));
         }
     }
 

@@ -67,6 +67,8 @@ public class FirebaseUtil {
                             Toast.makeText(mContext, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
 
+                            // TODO fix progress bar's visibility
+
                             binding.signUpProgressBar.setVisibility(View.GONE);
                         }
                     }

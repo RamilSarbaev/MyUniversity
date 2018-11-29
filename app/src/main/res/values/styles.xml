@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- Navigation View theme -->
+    <style name="NavigationViewTheme">
+        <item name="android:textSize">16sp</item> <!-- text size of menu's items -->
+        <item name="android:fontFamily">serif</item>
+    </style>
+
 </resources>

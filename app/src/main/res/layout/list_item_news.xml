@@ -13,7 +13,7 @@
 
         <variable
             name="handlers"
-            type="com.example.ramil.myuniversity.NewsFragment.NewsClickHandlers"/>
+            type="com.example.ramil.myuniversity.homescreen.NewsFragment.NewsClickHandlers"/>
     </data>
 
     <android.support.v7.widget.CardView

@@ -1,4 +1,4 @@
-package com.example.ramil.myuniversity;
+package com.example.ramil.myuniversity.homescreen;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,20 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ramil.myuniversity.databinding.FragmentScheduleBinding;
+import com.example.ramil.myuniversity.R;
+import com.example.ramil.myuniversity.databinding.FragmentEventsBinding;
 
-public class ScheduleFragment extends Fragment {
+public class EventsFragment extends Fragment {
 
-    public static ScheduleFragment newInstance() {
-        return new ScheduleFragment();
+    public static EventsFragment newInstance() {
+        return new EventsFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        FragmentScheduleBinding binding = DataBindingUtil
-                .inflate(inflater, R.layout.fragment_schedule, container, false);
+        FragmentEventsBinding binding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_events, container, false);
 
         return binding.getRoot();
     }

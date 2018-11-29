@@ -1,18 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="handlers"
+            type="com.example.ramil.myuniversity.homescreen.MoreFragment.MoreHandlers"/>
+    </data>
 
-
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <TextView
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/nav_header_height"
+            android:padding="16dp"
+            android:background="@drawable/grey_bottom_line"
+            android:onClick="@{handlers::onProfileClicked}">
+
+            <ImageView
+                android:id="@+id/profile_photo_image_view"
+                android:layout_width="@dimen/profile_photo_width"
+                android:layout_height="@dimen/profile_photo_height"
+                android:src="@android:drawable/sym_def_app_icon"
+                android:contentDescription="@string/news_image_view"/>
+
+            <TextView
+                android:id="@+id/profile_name_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/profile_photo_image_view"
+                android:text="Ramil Sarbaev"
+                android:textSize="16sp"
+                android:fontFamily="serif"
+                android:paddingTop="10dp"
+                android:paddingStart="16dp"
+                tools:text="Name"/>
+
+        </RelativeLayout>
+
+        <android.support.design.widget.NavigationView
+            android:id="@+id/more_navigation_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="More"
-            android:gravity="center_vertical|center_horizontal"/>
+            app:itemTextAppearance="@style/NavigationViewTheme"
+            app:menu="@menu/more_menu" />
 
-    </RelativeLayout>
-
+    </LinearLayout>
 </layout>

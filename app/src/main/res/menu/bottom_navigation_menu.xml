@@ -16,10 +16,10 @@
         android:icon="@drawable/ic_tasks"
         android:title="@string/tasks_item"/>
 
-    <item
+    <!--<item
         android:id="@+id/navigation_schedule"
         android:icon="@drawable/ic_schedule"
-        android:title="@string/schedule_item"/>
+        android:title="@string/schedule_item"/>-->
 
     <item
         android:id="@+id/navigation_more"

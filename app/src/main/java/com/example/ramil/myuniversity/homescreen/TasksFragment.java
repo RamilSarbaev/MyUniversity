@@ -1,4 +1,4 @@
-package com.example.ramil.myuniversity;
+package com.example.ramil.myuniversity.homescreen;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,20 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ramil.myuniversity.databinding.FragmentMoreBinding;
+import com.example.ramil.myuniversity.R;
+import com.example.ramil.myuniversity.databinding.FragmentTasksBinding;
 
-public class MoreFragment extends Fragment {
+public class TasksFragment extends Fragment {
 
-    public static MoreFragment newInstance() {
-        return new MoreFragment();
+    public static TasksFragment newInstance() {
+        return new TasksFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        FragmentMoreBinding binding = DataBindingUtil
-                .inflate(inflater, R.layout.fragment_more, container, false);
+        FragmentTasksBinding binding = DataBindingUtil
+                .inflate(inflater, R.layout.fragment_tasks, container, false);
 
         return binding.getRoot();
     }

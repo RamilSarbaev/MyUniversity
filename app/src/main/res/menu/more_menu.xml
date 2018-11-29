@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_chat"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/chat_item"/>
+
+    <item
+        android:id="@+id/menu_schedule"
+        android:icon="@drawable/ic_schedule"
+        android:title="@string/schedule_item"/>
+
+    <item
+        android:id="@+id/menu_mail"
+        android:icon="@drawable/ic_mail"
+        android:title="@string/mail_item"/>
+
+    <item
+        android:id="@+id/menu_freelance"
+        android:icon="@drawable/ic_freelance"
+        android:title="@string/freelance_item"/>
+</menu>

@@ -1,6 +1,7 @@
 package com.example.ramil.myuniversity.auth;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -36,6 +37,10 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseUtil firebaseUtil;
     //private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mReference;
+
+    public static Intent newIntent(Context context) {
+        return new Intent(context, SignupActivity.class);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

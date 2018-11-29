@@ -1,4 +1,4 @@
-package com.example.ramil.myuniversity;
+package com.example.ramil.myuniversity.homescreen;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
@@ -12,8 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.example.ramil.myuniversity.R;
 import com.example.ramil.myuniversity.databinding.FragmentNewsBinding;
 import com.example.ramil.myuniversity.databinding.ListItemNewsBinding;
 import com.example.ramil.myuniversity.model.News;
@@ -31,6 +31,7 @@ public class NewsFragment extends Fragment {
 
     private FragmentNewsBinding fragmentBinding;
     private NewsClickHandlers handlers;
+    private NewsCallbacks mCallbacks;
 
     private LinearLayoutManager mLinearLayoutManager;
 
@@ -40,6 +41,16 @@ public class NewsFragment extends Fragment {
 
     public static NewsFragment newInstance() {
         return new NewsFragment();
+    }
+
+    public interface NewsCallbacks {
+        void onNewsClicked(String url);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (NewsCallbacks) context;
     }
 
     @Nullable
@@ -54,6 +65,12 @@ public class NewsFragment extends Fragment {
         handlers = new NewsClickHandlers(getActivity());
 
         return fragmentBinding.getRoot();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
     }
 
     private void initNewsRecycler() {
@@ -162,9 +179,7 @@ public class NewsFragment extends Fragment {
         }
 
         public void onNewsClicked(View view, News news) {
-            Toast.makeText(mContext, "Link: " + news.getLink(), Toast.LENGTH_SHORT).show();
-
-            // TODO impl-t loading news in the site's WebView by the news link
+            mCallbacks.onNewsClicked(news.getLink());
         }
     }
 }

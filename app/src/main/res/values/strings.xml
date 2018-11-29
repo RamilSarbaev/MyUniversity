@@ -21,8 +21,13 @@
     <string name="news_item">Новости</string>
     <string name="events_item">События</string>
     <string name="tasks_item">Задания</string>
-    <string name="schedule_item">Пары</string>
     <string name="more_item"> </string>
+
+    <!-- More fragment -->
+    <string name="chat_item">Чат</string>
+    <string name="schedule_item">Расписание</string>
+    <string name="mail_item">Почта</string>
+    <string name="freelance_item">Фриланс</string>
 
     <!-- Firebase database fields -->
     <string name="db_users">users</string>
