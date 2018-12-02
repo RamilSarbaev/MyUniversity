@@ -21,8 +21,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 public class NewsFragment extends Fragment {
 
@@ -36,7 +36,6 @@ public class NewsFragment extends Fragment {
     private LinearLayoutManager mLinearLayoutManager;
 
     //Firebase vars
-    private DatabaseReference mFirebaseDatabaseReference;
     private FirebaseRecyclerAdapter<News, NewsViewHolder> mNewsFirebaseAdapter;
 
     public static NewsFragment newInstance() {
@@ -79,8 +78,6 @@ public class NewsFragment extends Fragment {
         mLinearLayoutManager.setStackFromEnd(true);
         fragmentBinding.newsRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        mFirebaseDatabaseReference = FirebaseDatabase.getInstance().getReference();
-
         SnapshotParser<News> parser = new SnapshotParser<News>() {
             @NonNull
             @Override
@@ -95,12 +92,17 @@ public class NewsFragment extends Fragment {
             }
         };
 
-        DatabaseReference newsReference = mFirebaseDatabaseReference.child(NEWS_CHILD);
+        Query query = FirebaseDatabase.getInstance()
+                .getReference()
+                .child(NEWS_CHILD)
+                .limitToLast(10);
 
         FirebaseRecyclerOptions<News> options = new FirebaseRecyclerOptions.Builder<News>()
-                        .setQuery(newsReference, parser)
+                        .setQuery(query, parser)
                         .build();
-        
+
+        // TODO impl-t partial loading
+
         mNewsFirebaseAdapter = new FirebaseRecyclerAdapter<News, NewsViewHolder>(options) {
             @NonNull
             @Override

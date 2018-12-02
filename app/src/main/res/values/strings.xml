@@ -23,6 +23,11 @@
     <string name="tasks_item">Задания</string>
     <string name="more_item"> </string>
 
+    <string name="news_fragment_tag">NEWSTAG</string>
+    <string name="events_fragment_tag">EVENTSTAG</string>
+    <string name="tasks_fragment_tag">TASKSTAG</string>
+    <string name="more_fragment_tag">MORETAG</string>
+
     <!-- More fragment -->
     <string name="chat_item">Чат</string>
     <string name="schedule_item">Расписание</string>

@@ -15,17 +15,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class FirebaseUtil {
 
     private static final String TAG = "FirebaseUtil";
+    private static final String USERS_ACCOUNT_NODE = "users_account";
 
     // Firebase vars
     private FirebaseAuth mAuth;
-    //private FirebaseAuth.AuthStateListener mAuthListener;
-    //private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mReference;
     private String userId;
 
@@ -118,5 +118,18 @@ public class FirebaseUtil {
         mReference.child(mContext.getString(R.string.db_users_account))
                 .child(userId)
                 .setValue(account);
+    }
+
+    /**
+     * Retrieves the account for the user currently logged in
+     * database: users_account node
+     *
+     * @param dataSnapshot
+     * @return
+     */
+    public UsersAccount getUsersAccount(DataSnapshot dataSnapshot) {
+        return dataSnapshot.child(USERS_ACCOUNT_NODE)
+                .child(userId)
+                .getValue(UsersAccount.class);
     }
 }

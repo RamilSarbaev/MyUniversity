@@ -23,11 +23,16 @@
             </intent-filter>
         </activity>
         <activity android:name=".auth.LoginActivity" />
-        <activity android:name=".auth.SignupActivity" />
-        <activity android:name=".otherviews.ChatActivity" />
-        <activity android:name=".otherviews.MailActivity" />
-        <activity android:name=".otherviews.ScheduleActivity" />
-        <activity android:name=".otherviews.FreelanceActivity"/>
+        <activity android:name=".auth.SignupActivity"
+            android:parentActivityName=".auth.LoginActivity"/>
+        <activity android:name=".otherviews.ChatActivity"
+            android:parentActivityName=".homescreen.HomeActivity"/>
+        <activity android:name=".otherviews.MailActivity"
+            android:parentActivityName=".homescreen.HomeActivity"/>
+        <activity android:name=".otherviews.ScheduleActivity"
+            android:parentActivityName=".homescreen.HomeActivity"/>
+        <activity android:name=".otherviews.FreelanceActivity"
+            android:parentActivityName=".homescreen.HomeActivity"/>
     </application>
 
 </manifest>

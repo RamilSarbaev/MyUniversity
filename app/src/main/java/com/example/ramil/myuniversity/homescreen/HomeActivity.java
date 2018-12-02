@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 
 import com.example.ramil.myuniversity.R;
 import com.example.ramil.myuniversity.databinding.ActivityHomeBinding;
+import com.example.ramil.myuniversity.model.UsersAccount;
 import com.example.ramil.myuniversity.utils.BaseActivity;
 import com.example.ramil.myuniversity.utils.BottomNavigationHelper;
 
@@ -40,8 +41,8 @@ public class HomeActivity extends BaseActivity implements MoreFragment.ProfileCa
     }
 
     @Override
-    public void onProfileSelected() {
-        ProfileFragment fragment = ProfileFragment.newInstance();
+    public void onProfileSelected(UsersAccount account) {
+        ProfileFragment fragment = ProfileFragment.newInstance(account);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
                 .addToBackStack(null)

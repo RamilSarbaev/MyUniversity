@@ -3,6 +3,7 @@ package com.example.ramil.myuniversity.utils;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -19,14 +20,14 @@ public class BottomNavigationHelper {
 
     // TODO fix reaction on changes in BackStack and Configuration(HeadFirst 457)
 
-    private static final String TAG = "BottomNavigationHelper";
-
     private AppCompatActivity mActivity;
     private ActionBar mToolbar;
+    private FragmentManager mFragmentManager;
 
     public BottomNavigationHelper(AppCompatActivity activity) {
         mActivity = activity;
         mToolbar = mActivity.getSupportActionBar();
+        mFragmentManager = mActivity.getSupportFragmentManager();
     }
 
     public void enableNavigation(BottomNavigationView view) {
@@ -67,10 +68,11 @@ public class BottomNavigationHelper {
     public void initBaseActivity() {
         mToolbar.setTitle(R.string.news_item);
         openFragment(NewsFragment.newInstance());
+
     }
 
     private void openFragment(Fragment newFragment) {
-        mActivity.getSupportFragmentManager().beginTransaction()
+        mFragmentManager.beginTransaction()
                 .replace(R.id.container, newFragment)
                 .addToBackStack(null)
                 .commit();

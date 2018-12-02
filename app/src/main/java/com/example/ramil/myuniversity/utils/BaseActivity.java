@@ -22,6 +22,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     //Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    protected FirebaseUser mUser;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -57,6 +58,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void checkCurrentUser(FirebaseUser user) {
         if (user != null) {
             Log.i(TAG, "checkCurrentUser: user signed in.");
+            mUser = user;
         } else {
             startActivity(LoginActivity.newIntent(mContext));
         }

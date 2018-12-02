@@ -1,6 +1,9 @@
 package com.example.ramil.myuniversity.model;
 
-public class UsersAccount {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class UsersAccount implements Parcelable {
     private String username;
     private String group;
     private String faculty;
@@ -10,12 +13,47 @@ public class UsersAccount {
     public UsersAccount() {
     }
 
-    public UsersAccount(String username, String group, String faculty, String photo, String website) {
+    public UsersAccount(String username, String group, String faculty,
+                        String photo, String website) {
         this.username = username;
         this.group = group;
         this.faculty = faculty;
         this.photo = photo;
         this.website = website;
+    }
+
+    protected UsersAccount(Parcel in) {
+        username = in.readString();
+        group = in.readString();
+        faculty = in.readString();
+        photo = in.readString();
+        website = in.readString();
+    }
+
+    public static final Creator<UsersAccount> CREATOR = new Creator<UsersAccount>() {
+        @Override
+        public UsersAccount createFromParcel(Parcel in) {
+            return new UsersAccount(in);
+        }
+
+        @Override
+        public UsersAccount[] newArray(int size) {
+            return new UsersAccount[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(username);
+        parcel.writeString(group);
+        parcel.writeString(faculty);
+        parcel.writeString(photo);
+        parcel.writeString(website);
     }
 
     public String getUsername() {
