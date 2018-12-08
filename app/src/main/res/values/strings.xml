@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyUniversity</string>
+    <string name="app_name">Мой Универ</string>
 
     <!-- login and signup layouts -->
     <string name="email_edit_text">Почта</string>
@@ -9,13 +9,19 @@
     <string name="login_button">Войти</string>
     <string name="sign_up_button">Зарегистрироваться</string>
     <string name="no_account_text_view">Еще нет аккаунта? Создать.</string>
-    <string name="register_title_text_view">РЕГИСТРАЦИЯ НОВОГО АККАУНТА</string>
+    <string name="register_title_text_view">РЕГИСТРАЦИЯ АККАУНТА</string>
 
-    <!-- widgets -->
-    <string name="news_image_view">Image view</string>
+    <!-- edit text fields -->
+    <string name="faculty_edit_text">Факультет</string>
+    <string name="website_edit_text">Веб-сайт</string>
+    <string name="about_me_edit_text">О себе</string>
+
+    <!-- toolbar -->
+    <string name="title">Заголовок</string>
 
     <!-- toolbar menu -->
     <string name="sign_out">Выйти</string>
+    <string name="edit_profile">Редактирование</string>
 
     <!-- Bottom Navigation View -->
     <string name="news_item">Новости</string>
@@ -23,23 +29,23 @@
     <string name="tasks_item">Задания</string>
     <string name="more_item"> </string>
 
-    <string name="news_fragment_tag">NEWSTAG</string>
-    <string name="events_fragment_tag">EVENTSTAG</string>
-    <string name="tasks_fragment_tag">TASKSTAG</string>
-    <string name="more_fragment_tag">MORETAG</string>
-
-    <!-- More fragment -->
+    <!-- Navigation View -->
     <string name="chat_item">Чат</string>
     <string name="schedule_item">Расписание</string>
     <string name="mail_item">Почта</string>
     <string name="freelance_item">Фриланс</string>
 
-    <!-- Firebase database fields -->
-    <string name="db_users">users</string>
-    <string name="db_users_account">users_account</string>
-    <string name="db_news">news</string>
+    <!-- Edit Profile -->
+    <string name="change_photo_label">Сменить фото</string>
 
     <!-- Error messages -->
     <string name="empty_field">Это поле не можеть быть пустым</string>
     <string name="small_password">Пароль должен быть длинее 6 символов</string>
+
+    <!-- Spinner's array -->
+    <string-array name="gender_array">
+        <item>Не указано</item>
+        <item>Мужской</item>
+        <item>Женский</item>
+    </string-array>
 </resources>

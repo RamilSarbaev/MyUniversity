@@ -1,4 +1,4 @@
-package com.example.ramil.myuniversity.otherviews;
+package com.example.ramil.myuniversity.homescreen;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,20 +11,25 @@ import android.view.View;
 import com.example.ramil.myuniversity.R;
 import com.example.ramil.myuniversity.utils.SingleFragmentActivity;
 
-public class ChatActivity extends SingleFragmentActivity {
+public class NewsPageActivity extends SingleFragmentActivity {
 
-    public static Intent newIntent(Context context) {
-        return new Intent(context, ChatActivity.class);
+    private static final String EXTRA_NEWS_URL = "com.example.ramil.myuniversity.news_url";
+
+    public static Intent newIntent(Context context, String url) {
+        Intent intent = new Intent(context, NewsPageActivity.class);
+        intent.putExtra(EXTRA_NEWS_URL, url);
+        return intent;
     }
 
     @Override
     protected Fragment createFragment() {
-        return ChatFragment.newInstance();
+        String url = getIntent().getStringExtra(EXTRA_NEWS_URL);
+        return NewsPageFragment.newInstance(url);
     }
 
     @Override
     protected void overrideContext() {
-        mContext = ChatActivity.this;
+        mContext = NewsPageActivity.this;
     }
 
     @Override
@@ -33,7 +38,7 @@ public class ChatActivity extends SingleFragmentActivity {
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.chat_item);
+        actionBar.setTitle("www.unn.ru");
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

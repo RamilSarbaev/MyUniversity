@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import com.example.ramil.myuniversity.R;
 import com.example.ramil.myuniversity.auth.LoginActivity;
@@ -22,7 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     //Firebase
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    protected FirebaseUser mUser;
+    protected FirebaseUser mFirebaseUser;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -31,7 +30,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
+/*    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_sign_out:
@@ -40,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }*/
 
     protected void setupFirebaseAuth() {
         mAuth = FirebaseAuth.getInstance();
@@ -58,13 +57,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void checkCurrentUser(FirebaseUser user) {
         if (user != null) {
             Log.i(TAG, "checkCurrentUser: user signed in.");
-            mUser = user;
+            mFirebaseUser = user;
         } else {
             startActivity(LoginActivity.newIntent(mContext));
         }
     }
 
-    private void signOut() {
+    protected void signOut() {
         mAuth.signOut();
     }
 

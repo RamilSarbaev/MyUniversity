@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="users_account"
-            type="com.example.ramil.myuniversity.model.UsersAccount"/>
+            name="user"
+            type="com.example.ramil.myuniversity.model.User"/>
         <variable
             name="handlers"
             type="com.example.ramil.myuniversity.homescreen.MoreFragment.MoreHandlers"/>
@@ -28,8 +28,7 @@
                 android:id="@+id/profile_photo_image_view"
                 android:layout_width="@dimen/profile_photo_width"
                 android:layout_height="@dimen/profile_photo_height"
-                android:contentDescription="@string/news_image_view"
-                app:imageUrl="@{users_account.photo}"
+                app:imageUrl="@{user.photo}"
                 tools:src="@drawable/placeholder"/>
 
             <TextView
@@ -37,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/profile_photo_image_view"
-                android:text="@{users_account.username}"
+                android:text="@{user.username}"
                 android:textSize="16sp"
                 android:fontFamily="serif"
                 android:paddingTop="10dp"

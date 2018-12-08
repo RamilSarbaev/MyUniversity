@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -27,15 +28,14 @@ public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
     private Context mContext;
-    private ActivitySignupBinding binding;
+    private ActivitySignupBinding mBinding;
 
     private String email, username, group, password;
 
     // Firebase vars
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseUtil firebaseUtil;
-    //private FirebaseDatabase mFirebaseDatabase;
+    private FirebaseUtil mFirebaseUtil;
     private DatabaseReference mReference;
 
     public static Intent newIntent(Context context) {
@@ -46,31 +46,45 @@ public class SignupActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_signup);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_signup);
 
         mContext = SignupActivity.this;
-        firebaseUtil = new FirebaseUtil(mContext);
+        mFirebaseUtil = new FirebaseUtil(mContext);
 
-        binding.signUpProgressBar.setVisibility(View.GONE);
+        mBinding.signUpProgressBar.setVisibility(View.GONE);
 
         setupFirebaseAuth();
+        setupToolbar();
 
         init();
     }
 
-    private void init() {
-        binding.signUpButton.setOnClickListener(new View.OnClickListener() {
+    private void setupToolbar() {
+        Toolbar toolbar = mBinding.layoutTop.toolbar;
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                email = binding.inputEmailEditText.getText().toString();
-                username = binding.inputUsernameEditText.getText().toString();
-                group = binding.inputGroupEditText.getText().toString();
-                password = binding.inputPasswordEditText.getText().toString();
+                finish();
+            }
+        });
+    }
+
+    private void init() {
+        mBinding.signUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                email = mBinding.inputEmailEditText.getText().toString();
+                username = mBinding.inputUsernameEditText.getText().toString();
+                group = mBinding.inputGroupEditText.getText().toString();
+                password = mBinding.inputPasswordEditText.getText().toString();
 
                 if (isCorrectInput(email, username, group, password)) {
-                    binding.signUpProgressBar.setVisibility(View.VISIBLE);
+                    mBinding.signUpProgressBar.setVisibility(View.VISIBLE);
 
-                    firebaseUtil.registerNewEmail(email, password, binding);
+                    mFirebaseUtil.registerNewEmail(email, password, mBinding);
                 }
             }
         });
@@ -95,7 +109,7 @@ public class SignupActivity extends AppCompatActivity {
                     mReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            firebaseUtil.addNewUser(email, username, group);
+                            mFirebaseUtil.addNewUser(email, username, group);
 
                             Toast.makeText(mContext,
                                     "Signup successful. Sending verification email.",
@@ -103,7 +117,7 @@ public class SignupActivity extends AppCompatActivity {
 
                             mAuth.signOut();
 
-                            binding.signUpProgressBar.setVisibility(View.GONE);
+                            mBinding.signUpProgressBar.setVisibility(View.GONE);
                         }
 
                         @Override
@@ -135,40 +149,40 @@ public class SignupActivity extends AppCompatActivity {
 
     private boolean validateEmail(String email) {
         if (email.isEmpty()) {
-            binding.inputEmailEditText.setError(getString(R.string.empty_field));
+            mBinding.inputEmailEditText.setError(getString(R.string.empty_field));
             return false;
         } else {
-            binding.inputEmailEditText.setError(null);
+            mBinding.inputEmailEditText.setError(null);
             return true;
         }
     }
 
     private boolean validateUsername(String username) {
         if (username.isEmpty()) {
-            binding.inputUsernameEditText.setError(getString(R.string.empty_field));
+            mBinding.inputUsernameEditText.setError(getString(R.string.empty_field));
             return false;
         } else {
-            binding.inputUsernameEditText.setError(null);
+            mBinding.inputUsernameEditText.setError(null);
             return true;
         }
     }
 
     private boolean validateGroup(String group) {
         if (group.isEmpty()) {
-            binding.inputGroupEditText.setError(getString(R.string.empty_field));
+            mBinding.inputGroupEditText.setError(getString(R.string.empty_field));
             return false;
         } else {
-            binding.inputGroupEditText.setError(null);
+            mBinding.inputGroupEditText.setError(null);
             return true;
         }
     }
 
     private boolean validatePassword(String password) {
         if (password.length() < 6) {
-            binding.inputPasswordEditText.setError(getString(R.string.small_password));
+            mBinding.inputPasswordEditText.setError(getString(R.string.small_password));
             return false;
         } else {
-            binding.inputPasswordEditText.setError(null);
+            mBinding.inputPasswordEditText.setError(null);
             return true;
         }
     }

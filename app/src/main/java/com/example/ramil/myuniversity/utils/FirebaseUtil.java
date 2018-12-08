@@ -1,15 +1,16 @@
 package com.example.ramil.myuniversity.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.ramil.myuniversity.R;
 import com.example.ramil.myuniversity.databinding.ActivitySignupBinding;
 import com.example.ramil.myuniversity.model.User;
-import com.example.ramil.myuniversity.model.UsersAccount;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -18,16 +19,20 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class FirebaseUtil {
 
     private static final String TAG = "FirebaseUtil";
-    private static final String USERS_ACCOUNT_NODE = "users_account";
+    private static final String USERS_CHILD = "users";
+    private static final String PROFILE_PHOTO_CHILD = "profile_photo";
 
     // Firebase vars
     private FirebaseAuth mAuth;
     private DatabaseReference mReference;
-    private String userId;
+    private String mUserId;
 
     private Context mContext;
 
@@ -38,7 +43,7 @@ public class FirebaseUtil {
         mReference = FirebaseDatabase.getInstance().getReference();
 
         if (mAuth.getCurrentUser() != null) {
-            userId = mAuth.getCurrentUser().getUid();
+            mUserId = mAuth.getCurrentUser().getUid();
         }
     }
 
@@ -60,7 +65,7 @@ public class FirebaseUtil {
 
                             sendVerificationEmail();
 
-                            userId = mAuth.getCurrentUser().getUid();
+                            mUserId = mAuth.getCurrentUser().getUid();
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
@@ -107,17 +112,22 @@ public class FirebaseUtil {
      * @param group
      */
     public void addNewUser(String email, String username, String group) {
-        User user = new User(userId, email, 1);
+        User user = new User(mUserId, username, email, group);
 
-        mReference.child(mContext.getString(R.string.db_users))
-                .child(userId)
+        mReference.child(USERS_CHILD)
+                .child(mUserId)
                 .setValue(user);
+    }
 
-        UsersAccount account = new UsersAccount(username, group, "", "", "");
-
-        mReference.child(mContext.getString(R.string.db_users_account))
-                .child(userId)
-                .setValue(account);
+    /**
+     *
+     *
+     * @param user
+     */
+    public void updateUsersData(User user) {
+        mReference.child(USERS_CHILD)
+                .child(mUserId)
+                .setValue(user);
     }
 
     /**
@@ -127,9 +137,44 @@ public class FirebaseUtil {
      * @param dataSnapshot
      * @return
      */
-    public UsersAccount getUsersAccount(DataSnapshot dataSnapshot) {
-        return dataSnapshot.child(USERS_ACCOUNT_NODE)
-                .child(userId)
-                .getValue(UsersAccount.class);
+    public User getUser(DataSnapshot dataSnapshot) {
+        return dataSnapshot.child(USERS_CHILD)
+                .child(mUserId)
+                .getValue(User.class);
+    }
+
+    /**
+     * Upload user's photo in Firebase Storage
+     *
+     * @param uri
+     */
+    public void putImageInStorage(Uri uri, final User user) {
+        final StorageReference storageReference = FirebaseStorage.getInstance()
+                .getReference(mUserId)
+                .child(PROFILE_PHOTO_CHILD)
+                .child(uri.getLastPathSegment());
+
+        UploadTask uploadTask = storageReference.putFile(uri);
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw  task.getException();
+                }
+
+                return storageReference.getDownloadUrl();
+            }
+        }).addOnCompleteListener((Activity) mContext, new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    // TODO add RX for retrieve path in EditProfileActivity
+                    String path = task.getResult().toString();
+                    user.setPhoto(path);
+                } else {
+                    Log.w(TAG, "Image upload task wasn't successful.", task.getException());
+                }
+            }
+        });
     }
 }

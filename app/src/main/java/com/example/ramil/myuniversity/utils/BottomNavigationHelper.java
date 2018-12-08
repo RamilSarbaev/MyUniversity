@@ -73,7 +73,7 @@ public class BottomNavigationHelper {
 
     private void openFragment(Fragment newFragment) {
         mFragmentManager.beginTransaction()
-                .replace(R.id.container, newFragment)
+                .replace(R.id.home_container, newFragment)
                 .addToBackStack(null)
                 .commit();
     }

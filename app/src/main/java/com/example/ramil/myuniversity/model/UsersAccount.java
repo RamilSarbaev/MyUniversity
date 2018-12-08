@@ -5,29 +5,34 @@ import android.os.Parcelable;
 
 public class UsersAccount implements Parcelable {
     private String username;
+    private String gender;
     private String group;
     private String faculty;
     private String photo;
     private String website;
+    private String aboutme;
 
     public UsersAccount() {
     }
 
-    public UsersAccount(String username, String group, String faculty,
-                        String photo, String website) {
+    public UsersAccount(String username, String gender, String group, String faculty, String photo, String website, String aboutme) {
         this.username = username;
+        this.gender = gender;
         this.group = group;
         this.faculty = faculty;
         this.photo = photo;
         this.website = website;
+        this.aboutme = aboutme;
     }
 
     protected UsersAccount(Parcel in) {
         username = in.readString();
+        gender = in.readString();
         group = in.readString();
         faculty = in.readString();
         photo = in.readString();
         website = in.readString();
+        aboutme = in.readString();
     }
 
     public static final Creator<UsersAccount> CREATOR = new Creator<UsersAccount>() {
@@ -50,10 +55,12 @@ public class UsersAccount implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(username);
+        parcel.writeString(gender);
         parcel.writeString(group);
         parcel.writeString(faculty);
         parcel.writeString(photo);
         parcel.writeString(website);
+        parcel.writeString(aboutme);
     }
 
     public String getUsername() {
@@ -96,14 +103,32 @@ public class UsersAccount implements Parcelable {
         this.website = website;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAboutme() {
+        return aboutme;
+    }
+
+    public void setAboutme(String aboutme) {
+        this.aboutme = aboutme;
+    }
+
     @Override
     public String toString() {
         return "UsersAccount{" +
                 "username='" + username + '\'' +
+                ", gender='" + gender + '\'' +
                 ", group='" + group + '\'' +
                 ", faculty='" + faculty + '\'' +
                 ", photo='" + photo + '\'' +
                 ", website='" + website + '\'' +
+                ", aboutme='" + aboutme + '\'' +
                 '}';
     }
 }

@@ -33,6 +33,12 @@
             android:parentActivityName=".homescreen.HomeActivity"/>
         <activity android:name=".otherviews.FreelanceActivity"
             android:parentActivityName=".homescreen.HomeActivity"/>
+        <activity android:name=".otherviews.EditProfileActivity"
+            android:parentActivityName=".homescreen.ProfileActivity"/>
+        <activity android:name=".homescreen.NewsPageActivity"
+            android:parentActivityName=".homescreen.HomeActivity"/>
+        <activity android:name=".homescreen.ProfileActivity"
+            android:parentActivityName=".homescreen.HomeActivity"/>
     </application>
 
 </manifest>

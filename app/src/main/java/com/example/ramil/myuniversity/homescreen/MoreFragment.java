@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.ramil.myuniversity.R;
 import com.example.ramil.myuniversity.databinding.FragmentMoreBinding;
-import com.example.ramil.myuniversity.model.UsersAccount;
+import com.example.ramil.myuniversity.model.User;
 import com.example.ramil.myuniversity.otherviews.ChatActivity;
 import com.example.ramil.myuniversity.otherviews.FreelanceActivity;
 import com.example.ramil.myuniversity.otherviews.MailActivity;
@@ -30,7 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 public class MoreFragment extends Fragment {
 
     private static final String TAG = "MoreFragment";
-    private static final String ARG_UID = "firebase_user_uid";
 
     private Context mContext;
     private FragmentMoreBinding mBinding;
@@ -40,14 +39,14 @@ public class MoreFragment extends Fragment {
     private DatabaseReference mReference;
     private FirebaseUtil mFirebaseUtil;
 
-    private UsersAccount mUsersAccount;
+    private User mUser;
 
     public static MoreFragment newInstance() {
         return new MoreFragment();
     }
 
     public interface ProfileCallbacks {
-        void onProfileSelected(UsersAccount account);
+        void onProfileSelected(User user);
     }
 
     @Override
@@ -79,8 +78,8 @@ public class MoreFragment extends Fragment {
         mReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mUsersAccount = mFirebaseUtil.getUsersAccount(dataSnapshot);
-                mBinding.setUsersAccount(mUsersAccount);
+                mUser = mFirebaseUtil.getUser(dataSnapshot);
+                mBinding.setUser(mUser);
             }
 
             @Override
@@ -125,7 +124,7 @@ public class MoreFragment extends Fragment {
     public class MoreHandlers {
 
         public void onProfileClicked(View view) {
-            mCallbacks.onProfileSelected(mUsersAccount);
+            mCallbacks.onProfileSelected(mUser);
         }
     }
 }

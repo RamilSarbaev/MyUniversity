@@ -11,30 +11,35 @@ import android.view.ViewGroup;
 
 import com.example.ramil.myuniversity.R;
 import com.example.ramil.myuniversity.databinding.FragmentProfileBinding;
-import com.example.ramil.myuniversity.model.UsersAccount;
+import com.example.ramil.myuniversity.model.User;
 
 public class ProfileFragment extends Fragment {
 
     private static final String TAG = "ProfileFragment";
-    private static final String ARG_USERS_ACCOUNT = "users_account";
+    private static final String ARG_USER = "user";
 
     private FragmentProfileBinding mBinding;
 
-    private UsersAccount mUsersAccount;
+    private User mUser;
 
-    public static ProfileFragment newInstance(UsersAccount account) {
+    public static ProfileFragment newInstance(User user) {
         Bundle args = new Bundle();
-        args.putParcelable(ARG_USERS_ACCOUNT, account);
+        args.putParcelable(ARG_USER, user);
 
         ProfileFragment fragment = new ProfileFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
+    public void setUser(User user) {
+        mUser = user;
+        mBinding.setUser(mUser);
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUsersAccount = getUsersAccountFromArgs();
+        mUser = getUserFromArgs();
     }
 
     @Nullable
@@ -44,15 +49,15 @@ public class ProfileFragment extends Fragment {
         mBinding = DataBindingUtil
                 .inflate(inflater, R.layout.fragment_profile, container, false);
 
-        mBinding.setUsersAccount(mUsersAccount);
+        mBinding.setUser(mUser);
 
         return mBinding.getRoot();
     }
 
-    private UsersAccount getUsersAccountFromArgs() {
+    private User getUserFromArgs() {
         Bundle args = getArguments();
         if (args != null) {
-            return args.getParcelable(ARG_USERS_ACCOUNT);
+            return args.getParcelable(ARG_USER);
         } else {
             return null;
         }

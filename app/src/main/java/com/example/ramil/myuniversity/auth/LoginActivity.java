@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -46,10 +47,16 @@ public class LoginActivity extends AppCompatActivity {
         mBinding.loginProgressBar.setVisibility(View.GONE);
 
         setupFirebaseAuth();
+        setupToolbar();
     }
 
     private void setupFirebaseAuth() {
         mAuth = FirebaseAuth.getInstance();
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = mBinding.layoutTop.toolbar;
+        setSupportActionBar(toolbar);
     }
 
     public class LoginClickHandlers {

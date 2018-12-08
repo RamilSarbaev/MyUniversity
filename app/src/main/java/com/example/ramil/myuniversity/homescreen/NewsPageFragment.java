@@ -54,6 +54,7 @@ public class NewsPageFragment extends Fragment {
         return mBinding.getRoot();
     }
 
+
     @SuppressLint("SetJavaScriptEnabled")
     private void initWebView() {
         mProgressBar = mBinding.progressBar;
