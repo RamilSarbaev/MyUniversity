@@ -29,7 +29,7 @@ public class NewsFragment extends Fragment {
     private static final String TAG = "NewsFragment";
     private static final String NEWS_CHILD = "news";
 
-    private FragmentNewsBinding fragmentBinding;
+    private FragmentNewsBinding mFragmentBinding;
     private NewsClickHandlers handlers;
     private NewsCallbacks mCallbacks;
 
@@ -56,14 +56,14 @@ public class NewsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        fragmentBinding = DataBindingUtil
+        mFragmentBinding = DataBindingUtil
                 .inflate(inflater, R.layout.fragment_news, container, false);
 
         initNewsRecycler();
 
         handlers = new NewsClickHandlers(getActivity());
 
-        return fragmentBinding.getRoot();
+        return mFragmentBinding.getRoot();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class NewsFragment extends Fragment {
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
-        fragmentBinding.newsRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mFragmentBinding.newsRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         SnapshotParser<News> parser = new SnapshotParser<News>() {
             @NonNull
@@ -118,7 +118,7 @@ public class NewsFragment extends Fragment {
             protected void onBindViewHolder(@NonNull NewsViewHolder holder, int position,
                                             @NonNull News news) {
                 Log.i(TAG, "onBindViewHolder: " + news.toString());
-                fragmentBinding.newsProgressBar.setVisibility(View.INVISIBLE);
+                mFragmentBinding.newsProgressBar.setVisibility(View.INVISIBLE);
 
                 holder.bind(news, handlers);
             }
@@ -129,18 +129,18 @@ public class NewsFragment extends Fragment {
             public void onItemRangeInserted(int positionStart, int itemCount) {
                 super.onItemRangeInserted(positionStart, itemCount);
 
-                int messageCount = mNewsFirebaseAdapter.getItemCount();
+                int newsCount = mNewsFirebaseAdapter.getItemCount();
                 int lastVisiblePosition =
                         mLinearLayoutManager.findLastCompletelyVisibleItemPosition();
                 if (lastVisiblePosition == -1 ||
-                        (positionStart >= (messageCount - 1) &&
+                        (positionStart >= (newsCount - 1) &&
                                 lastVisiblePosition == (positionStart - 1))) {
-                    fragmentBinding.newsRecyclerView.scrollToPosition(positionStart);
+                    mFragmentBinding.newsRecyclerView.scrollToPosition(positionStart);
                 }
             }
         });
 
-        fragmentBinding.newsRecyclerView.setAdapter(mNewsFirebaseAdapter);
+        mFragmentBinding.newsRecyclerView.setAdapter(mNewsFirebaseAdapter);
     }
 
     private static class NewsViewHolder extends RecyclerView.ViewHolder {

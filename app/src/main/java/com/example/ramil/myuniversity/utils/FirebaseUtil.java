@@ -120,7 +120,7 @@ public class FirebaseUtil {
     }
 
     /**
-     *
+     * Updates user's data in database: users node
      *
      * @param user
      */
@@ -131,8 +131,8 @@ public class FirebaseUtil {
     }
 
     /**
-     * Retrieves the account for the user currently logged in
-     * database: users_account node
+     * Retrieves the profile for the user currently logged in
+     * database: users node
      *
      * @param dataSnapshot
      * @return
@@ -140,6 +140,19 @@ public class FirebaseUtil {
     public User getUser(DataSnapshot dataSnapshot) {
         return dataSnapshot.child(USERS_CHILD)
                 .child(mUserId)
+                .getValue(User.class);
+    }
+
+    /**
+     * Retrieves user with current uid
+     *
+     * @param dataSnapshot
+     * @param uid
+     * @return
+     */
+    public User getUser(DataSnapshot dataSnapshot, String uid) {
+        return dataSnapshot.child(USERS_CHILD)
+                .child(uid)
                 .getValue(User.class);
     }
 

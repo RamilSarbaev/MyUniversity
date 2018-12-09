@@ -79,8 +79,15 @@ public class ProfileActivity extends SingleFragmentActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        String uid = mFirebaseUser.getUid();
+
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.profile_menu, menu);
+        if (uid.equals(mUser.getUid())) {
+            inflater.inflate(R.menu.profile_menu, menu);
+        } else {
+            inflater.inflate(R.menu.toolbar_menu, menu);
+        }
+
         return true;
     }
 

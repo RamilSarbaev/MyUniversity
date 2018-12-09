@@ -12,45 +12,61 @@
             type="com.example.ramil.myuniversity.homescreen.MoreFragment.MoreHandlers"/>
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/nav_header_height"
-            android:padding="10dp"
-            android:background="@drawable/grey_bottom_line"
-            android:onClick="@{handlers::onProfileClicked}">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_photo_image_view"
-                android:layout_width="@dimen/profile_photo_width"
-                android:layout_height="@dimen/profile_photo_height"
-                app:imageUrl="@{user.photo}"
-                tools:src="@drawable/placeholder"/>
-
-            <TextView
-                android:id="@+id/profile_name_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/profile_photo_image_view"
-                android:text="@{user.username}"
-                android:textSize="16sp"
-                android:fontFamily="serif"
-                android:paddingTop="10dp"
-                android:paddingStart="10dp"
-                tools:text="Username"/>
-
-        </RelativeLayout>
-
-        <android.support.design.widget.NavigationView
-            android:id="@+id/more_navigation_view"
+        <LinearLayout
+            android:id="@+id/main_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:itemTextAppearance="@style/NavigationViewTheme"
-            app:menu="@menu/more_menu" />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/nav_header_height"
+                android:padding="10dp"
+                android:background="@drawable/grey_bottom_line"
+                android:onClick="@{handlers::onProfileClicked}">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_photo_image_view"
+                    android:layout_width="@dimen/profile_photo_width"
+                    android:layout_height="@dimen/profile_photo_height"
+                    app:imageUrl="@{user.photo}"
+                    tools:src="@drawable/placeholder"/>
+
+                <TextView
+                    android:id="@+id/profile_name_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/profile_photo_image_view"
+                    android:text="@{user.username}"
+                    android:textSize="16sp"
+                    android:fontFamily="serif"
+                    android:paddingTop="10dp"
+                    android:paddingStart="10dp"
+                    tools:text="Username"/>
+
+            </RelativeLayout>
+
+            <android.support.design.widget.NavigationView
+                android:id="@+id/more_navigation_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:itemTextAppearance="@style/NavigationViewTheme"
+                app:menu="@menu/more_menu" />
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/more_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:indeterminateTintMode="src_in"
+            android:indeterminateTint="@color/link_blue"/>
+
+    </RelativeLayout>
 </layout>

@@ -9,17 +9,25 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.ramil.myuniversity.R;
+import com.example.ramil.myuniversity.model.User;
 import com.example.ramil.myuniversity.utils.SingleFragmentActivity;
 
 public class ChatActivity extends SingleFragmentActivity {
 
-    public static Intent newIntent(Context context) {
-        return new Intent(context, ChatActivity.class);
+    private static final String EXTRA_USER = "ramil.myuniversity.otherviews.user";
+
+    private User mUser;
+
+    public static Intent newIntent(Context context, User user) {
+        Intent intent = new Intent(context, ChatActivity.class);
+        intent.putExtra(EXTRA_USER, user);
+        return intent;
     }
 
     @Override
     protected Fragment createFragment() {
-        return ChatFragment.newInstance();
+        mUser = getIntent().getParcelableExtra(EXTRA_USER);
+        return ChatFragment.newInstance(mUser);
     }
 
     @Override
@@ -33,7 +41,7 @@ public class ChatActivity extends SingleFragmentActivity {
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.chat_item);
+        actionBar.setTitle(mUser.getGroup());
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

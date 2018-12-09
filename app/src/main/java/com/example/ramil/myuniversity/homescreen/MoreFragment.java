@@ -61,6 +61,7 @@ public class MoreFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         mBinding = DataBindingUtil
                 .inflate(inflater, R.layout.fragment_more, container, false);
+        mBinding.mainLayout.setVisibility(View.INVISIBLE);
         mBinding.setHandlers(new MoreHandlers());
 
         mContext = getActivity();
@@ -80,12 +81,16 @@ public class MoreFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUser = mFirebaseUtil.getUser(dataSnapshot);
                 mBinding.setUser(mUser);
+
+                mBinding.moreProgressBar.setVisibility(View.INVISIBLE);
+                mBinding.mainLayout.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", databaseError.toException());
+                mBinding.moreProgressBar.setVisibility(View.INVISIBLE);
             }
         });
     }
@@ -97,7 +102,7 @@ public class MoreFragment extends Fragment {
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.menu_chat:
-                                startActivity(ChatActivity.newIntent(mContext));
+                                startActivity(ChatActivity.newIntent(mContext, mUser));
                                 return true;
                             case R.id.menu_schedule:
                                 startActivity(ScheduleActivity.newIntent(mContext));

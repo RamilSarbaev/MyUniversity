@@ -37,6 +37,7 @@
 
     <!-- Edit Profile -->
     <string name="change_photo_label">Сменить фото</string>
+    <string name="send_button">Отправить</string>
 
     <!-- Error messages -->
     <string name="empty_field">Это поле не можеть быть пустым</string>
