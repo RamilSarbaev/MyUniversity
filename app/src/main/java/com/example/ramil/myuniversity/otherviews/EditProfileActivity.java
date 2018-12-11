@@ -30,6 +30,7 @@ public class EditProfileActivity extends BaseActivity {
     private ActivityEditProfileBinding mBinding;
 
     private User mUser;
+    private String mUsersGroup;
 
     private FirebaseUtil mFirebaseUtil;
 
@@ -46,6 +47,7 @@ public class EditProfileActivity extends BaseActivity {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_edit_profile);
 
         mUser = getIntent().getParcelableExtra(EXTRA_USER);
+        mUsersGroup = mUser.getGroup();
         mBinding.setUser(mUser);
         mBinding.setHandlers(new EditProfileHandlers());
 
@@ -83,6 +85,11 @@ public class EditProfileActivity extends BaseActivity {
         public void onConfirmClicked(View view) {
             setProfileChanged();
             mFirebaseUtil.updateUsersData(mUser);
+
+            String newGroup = mUser.getGroup();
+            if (!mUsersGroup.equals(newGroup)) {
+                mFirebaseUtil.removeUserFromGroupChat(mUsersGroup);
+            }
 
             finish();
         }

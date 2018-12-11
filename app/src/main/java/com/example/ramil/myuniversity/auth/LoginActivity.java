@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     private ActivityLoginBinding mBinding;
+    private Context mContext;
 
     //Firebase
     private FirebaseAuth mAuth;
@@ -41,9 +42,9 @@ public class LoginActivity extends AppCompatActivity {
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login);
 
-        LoginClickHandlers mHandlers = new LoginClickHandlers(this);
-        mBinding.setHandlers(mHandlers);
+        mContext = LoginActivity.this;
 
+        mBinding.setHandlers(new LoginClickHandlers());
         mBinding.loginProgressBar.setVisibility(View.GONE);
 
         setupFirebaseAuth();
@@ -60,12 +61,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public class LoginClickHandlers {
-
-        Context mContext;
-
-        public LoginClickHandlers(Context context) {
-            mContext = context;
-        }
 
         public void onLoginButtonClicked(View view) {
             String email = mBinding.inputEmailEditText.getText().toString();

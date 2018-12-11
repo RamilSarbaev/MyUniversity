@@ -74,6 +74,7 @@ public class ChatFragment extends Fragment {
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference();
         mFirebaseUtil = new FirebaseUtil(getActivity());
+        mFirebaseUtil.addUserToGroupChat(mUser);
 
         initRecyclerView();
 

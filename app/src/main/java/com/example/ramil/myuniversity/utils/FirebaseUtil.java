@@ -19,6 +19,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -28,10 +31,13 @@ public class FirebaseUtil {
     private static final String TAG = "FirebaseUtil";
     private static final String USERS_CHILD = "users";
     private static final String PROFILE_PHOTO_CHILD = "profile_photo";
+    private static final String CHAT_CHILD = "chat";
+    private static final String MESSAGES_CHILD = "messages";
 
     // Firebase vars
     private FirebaseAuth mAuth;
-    private DatabaseReference mReference;
+    private DatabaseReference mDatabaseReference;
+    private FirebaseMessaging mFirebaseMessaging;
     private String mUserId;
 
     private Context mContext;
@@ -40,7 +46,8 @@ public class FirebaseUtil {
         mContext = context;
 
         mAuth = FirebaseAuth.getInstance();
-        mReference = FirebaseDatabase.getInstance().getReference();
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference();
+        mFirebaseMessaging = FirebaseMessaging.getInstance();
 
         if (mAuth.getCurrentUser() != null) {
             mUserId = mAuth.getCurrentUser().getUid();
@@ -114,7 +121,7 @@ public class FirebaseUtil {
     public void addNewUser(String email, String username, String group) {
         User user = new User(mUserId, username, email, group);
 
-        mReference.child(USERS_CHILD)
+        mDatabaseReference.child(USERS_CHILD)
                 .child(mUserId)
                 .setValue(user);
     }
@@ -125,7 +132,7 @@ public class FirebaseUtil {
      * @param user
      */
     public void updateUsersData(User user) {
-        mReference.child(USERS_CHILD)
+        mDatabaseReference.child(USERS_CHILD)
                 .child(mUserId)
                 .setValue(user);
     }
@@ -189,5 +196,44 @@ public class FirebaseUtil {
                 }
             }
         });
+    }
+
+    /**
+     * Subscribe on user's group chat in order to receive notifications about new messages
+     *
+     * @param user
+     */
+    public void addUserToGroupChat(final User user) {
+        final DatabaseReference reference = mDatabaseReference.child(CHAT_CHILD)
+                .child(user.getGroup())
+                .child(USERS_CHILD)
+                .child(mUserId);
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        String token = task.getResult().getToken();
+
+                        reference.child("token").setValue(token);
+                        reference.child("isNotified").setValue(true);
+
+                        Log.i(TAG, user.getUsername() + " added in "
+                                + user.getGroup() + " chat with token: " + token);
+                    }
+                });
+    }
+
+    /**
+     * Unsubscribe from group chat
+     *
+     * @param group
+     */
+    public void removeUserFromGroupChat(String group) {
+        mDatabaseReference.child(CHAT_CHILD)
+                .child(group)
+                .child(USERS_CHILD)
+                .child(mUserId)
+                .removeValue();
     }
 }
